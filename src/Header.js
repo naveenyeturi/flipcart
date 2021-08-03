@@ -37,6 +37,7 @@ function Header() {
               width="10"
               src="https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/plus_aef861.png"
               alt="plus"
+              title="Plus"
             />
           </a>
         </div>
