@@ -17,9 +17,17 @@ import { useState } from "react";
 
 import { Link } from "react-router-dom";
 
-function Header() {
+import { auth } from "./firebase.js";
+
+function Header({ user }) {
   const [nameHover, setNameHover] = useState(false);
   const [moreHover, setMoreHover] = useState(false);
+
+  const logout = () => {
+    auth.signOut();
+    setNameHover(false);
+    setMoreHover(false);
+  };
 
   return (
     <>
@@ -54,8 +62,10 @@ function Header() {
           <SearchIcon className="searchicon" />
         </div>
 
+        {/* {console.log(user)} */}
+
         <div className="header__menuitems">
-          {false ? (
+          {user ? (
             <div
               className="item"
               onClick={() => {
@@ -63,7 +73,8 @@ function Header() {
                 setMoreHover(false);
               }}
             >
-              Naveen {nameHover ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              {user.displayName}
+              {nameHover ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             </div>
           ) : (
             <Link to="/signin">
@@ -99,7 +110,7 @@ function Header() {
           <FavoriteIcon />
           <p>Wishlist</p>
         </div>
-        <div className="dropitem">
+        <div className="dropitem" onClick={logout}>
           <PowerSettingsNewIcon />
           <p>Logout</p>
         </div>
