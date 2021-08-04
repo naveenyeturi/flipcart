@@ -1,4 +1,7 @@
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+import firebase from "firebase";
+
 const firebaseConfig = {
   apiKey: "AIzaSyDQWtNcC9Eno2fEll2MMqd6wlBb_W-OuBw",
   authDomain: "flipkart-clone-react.firebaseapp.com",
@@ -8,3 +11,10 @@ const firebaseConfig = {
   appId: "1:63258720128:web:6423c3284838fdedf57365",
   measurementId: "G-D3JZDCB4C8",
 };
+
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+const db = firebaseApp.firestore();
+const auth = firebase.auth();
+
+export { db, auth };

@@ -15,6 +15,8 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 import { useState } from "react";
 
+import { Link } from "react-router-dom";
+
 function Header() {
   const [nameHover, setNameHover] = useState(false);
   const [moreHover, setMoreHover] = useState(false);
@@ -53,15 +55,22 @@ function Header() {
         </div>
 
         <div className="header__menuitems">
-          <div
-            className="item"
-            onClick={() => {
-              setNameHover(!nameHover);
-              setMoreHover(false);
-            }}
-          >
-            Naveen {nameHover ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          </div>
+          {false ? (
+            <div
+              className="item"
+              onClick={() => {
+                setNameHover(!nameHover);
+                setMoreHover(false);
+              }}
+            >
+              Naveen {nameHover ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            </div>
+          ) : (
+            <Link to="/signin">
+              <div className="login-btn">Login</div>
+            </Link>
+          )}
+
           <div
             className="item"
             onClick={() => {
