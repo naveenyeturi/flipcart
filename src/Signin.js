@@ -64,9 +64,10 @@ function Signin({ setUser }) {
             Login
           </button>
 
-          <Link to="/signup">
+          {/* <Link to="/signup">
             <a href="#">New to Flipkart? Create an account</a>
-          </Link>
+          </Link> */}
+          <Link to="/signup">New to Flipkart? Create an account</Link>
         </form>
       </div>
     </div>

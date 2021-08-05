@@ -70,11 +70,9 @@ function Signup() {
             and <a href="#">Privacy Policy</a>.
           </p>
           <button className="login-btn1" type="submit">
-            Login
+            Register
           </button>
-          <Link to="/signin">
-            <a href="#">Existing User? Log in</a>
-          </Link>
+          <Link to="/signin">Existing User? Log in</Link>
         </form>
       </div>
     </div>

@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 
 import { auth } from "./firebase.js";
 
-function Header({ user }) {
+function Header({ user, loading }) {
   const [nameHover, setNameHover] = useState(false);
   const [moreHover, setMoreHover] = useState(false);
 
@@ -41,7 +41,7 @@ function Header({ user }) {
               title="Flipkart"
             />
           </a>
-          <a className="plus" href="/plus">
+          <a className="plus" href="#">
             ExplorePlus
             <img
               width="10"
@@ -62,10 +62,30 @@ function Header({ user }) {
           <SearchIcon className="searchicon" />
         </div>
 
-        {/* {console.log(user)} */}
-
         <div className="header__menuitems">
-          {user ? (
+          {/* {loading ? <h5>Loading...</h5> : ""} */}
+          {/* {user ? (
+            <div
+              className="item"
+              onClick={() => {
+                setNameHover(!nameHover);
+                setMoreHover(false);
+              }}
+            >
+              {user.displayName}
+              {nameHover ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            </div>
+          ) : (
+            <Link to="/signin">
+              <div className="login-btn">Login</div>
+            </Link>
+          )} */}
+
+          {loading ? (
+            <div className="item">
+              <h4>Loading...</h4>
+            </div>
+          ) : user ? (
             <div
               className="item"
               onClick={() => {
