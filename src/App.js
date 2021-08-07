@@ -13,6 +13,7 @@ import Signup from "./Signup";
 import { useState } from "react";
 import { auth } from "./firebase.js";
 import { useEffect } from "react";
+import Products from "./Products";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -44,6 +45,7 @@ function App() {
 
           <Route path="/">
             <Header user={user} loading={loading} />
+            <Products />
           </Route>
         </Switch>
       </div>

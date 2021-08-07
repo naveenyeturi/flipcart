@@ -15,6 +15,8 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 import { useState } from "react";
 
+import { BallClipRotate } from "react-pure-loaders";
+
 import { Link } from "react-router-dom";
 
 import { auth } from "./firebase.js";
@@ -83,7 +85,7 @@ function Header({ user, loading }) {
 
           {loading ? (
             <div className="item">
-              <h4>Loading...</h4>
+              <BallClipRotate color={"#ffffff"} loading={true} />
             </div>
           ) : user ? (
             <div
