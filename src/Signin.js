@@ -19,6 +19,7 @@ function Signin({ setUser }) {
         var user = userCredential.user;
         if (user.email) {
           setUser(user);
+          localStorage.setItem("email", email);
           history.push("/");
         }
         // ...
@@ -26,6 +27,9 @@ function Signin({ setUser }) {
       .catch((error) => {
         // var errorCode = error.code;
         // var errorMessage = error.message;
+        // console.log(errorMessage);
+        document.getElementById("loginfail").innerHTML =
+          "Email and Password does not match";
       });
   };
 
@@ -60,9 +64,12 @@ function Signin({ setUser }) {
             By continuing, you agree to Flipkart's <a href="#">Terms of Use </a>
             and <a href="#">Privacy Policy</a>.
           </p>
+          <p id="loginfail"></p>
           <button className="login-btn1" type="submit">
             Login
           </button>
+
+          <p id="loginfail"></p>
 
           {/* <Link to="/signup">
             <a href="#">New to Flipkart? Create an account</a>

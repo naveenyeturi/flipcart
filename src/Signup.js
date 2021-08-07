@@ -26,6 +26,8 @@ function Signup() {
         // var errorCode = error.code;
         // var errorMessage = error.message;
         // ..
+        document.getElementById("registrationfail").innerHTML =
+          "User already exists or check email format";
       });
   };
 
@@ -69,6 +71,7 @@ function Signup() {
             By continuing, you agree to Flipkart's <a href="#">Terms of Use </a>
             and <a href="#">Privacy Policy</a>.
           </p>
+          <p id="registrationfail"></p>
           <button className="login-btn1" type="submit">
             Register
           </button>

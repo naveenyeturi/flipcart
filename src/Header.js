@@ -17,13 +17,15 @@ import { useState } from "react";
 
 import { BallClipRotate } from "react-pure-loaders";
 
-import { Link } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 
 import { auth } from "./firebase.js";
 
-function Header({ user, loading }) {
+function Header({ user, loading, cart }) {
   const [nameHover, setNameHover] = useState(false);
   const [moreHover, setMoreHover] = useState(false);
+
+  const match = useRouteMatch("/cart");
 
   const logout = () => {
     auth.signOut();
@@ -65,24 +67,6 @@ function Header({ user, loading }) {
         </div>
 
         <div className="header__menuitems">
-          {/* {loading ? <h5>Loading...</h5> : ""} */}
-          {/* {user ? (
-            <div
-              className="item"
-              onClick={() => {
-                setNameHover(!nameHover);
-                setMoreHover(false);
-              }}
-            >
-              {user.displayName}
-              {nameHover ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-            </div>
-          ) : (
-            <Link to="/signin">
-              <div className="login-btn">Login</div>
-            </Link>
-          )} */}
-
           {loading ? (
             <div className="item">
               <BallClipRotate color={"#ffffff"} loading={true} />
@@ -104,18 +88,36 @@ function Header({ user, loading }) {
             </Link>
           )}
 
-          <div
-            className="item"
-            onClick={() => {
-              setMoreHover(!moreHover);
-              setNameHover(false);
-            }}
-          >
-            More {moreHover ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          </div>
-          <div className="item">
-            <ShoppingCartIcon /> Cart
-          </div>
+          {match ? (
+            ""
+          ) : (
+            <div
+              className="item"
+              onClick={() => {
+                setMoreHover(!moreHover);
+                setNameHover(false);
+              }}
+            >
+              More {moreHover ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            </div>
+          )}
+          {match ? (
+            ""
+          ) : (
+            <Link to="/cart">
+              <div className="item">
+                <div>
+                  {cart.length <= 0 ? (
+                    ""
+                  ) : (
+                    <p className="cartLength">{cart.length}</p>
+                  )}
+                  <ShoppingCartIcon />
+                </div>
+                Cart
+              </div>
+            </Link>
+          )}
         </div>
       </div>
 

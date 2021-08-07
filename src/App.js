@@ -11,20 +11,43 @@ import {
 import Signin from "./Signin";
 import Signup from "./Signup";
 import { useState } from "react";
-import { auth } from "./firebase.js";
+import { auth, db } from "./firebase.js";
 import { useEffect } from "react";
 import Products from "./Products";
+import Cart from "./Cart";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+  function getCartProducts() {
     setLoading(true);
+    const cartRef = db.collection("cart");
+    cartRef.onSnapshot((querySnapshot) => {
+      const cartItems = [];
+      querySnapshot.forEach((doc) => {
+        const productData = doc.data();
+        if (productData.userEmail === localStorage.getItem("email")) {
+          cartItems.push(productData);
+        }
+      });
+      setCart(...cart, cartItems);
+
+      setTimeout(() => {
+        setLoading(false);
+      }, 1);
+    });
+  }
+
+  useEffect(() => {
+    // setLoading(true);
     auth.onAuthStateChanged((authUser) => {
       setUser(authUser);
-      setLoading(false);
+      // setLoading(false);
     });
+
+    getCartProducts();
   }, []);
 
   return (
@@ -43,9 +66,25 @@ function App() {
             <Signup />
           </Route>
 
-          <Route path="/">
+          {/* <Route path="/product/:name">
             <Header user={user} loading={loading} />
+            <h1>Inside Product</h1>
             <Products />
+          </Route> */}
+
+          <Route path="/cart">
+            <Header user={user} loading={loading} cart={cart} />
+            <Cart cart={cart} />
+          </Route>
+
+          <Route path="/">
+            <Header user={user} loading={loading} cart={cart} />
+            <Products
+              cart={cart}
+              setCart={setCart}
+              loading={loading}
+              user={user}
+            />
           </Route>
         </Switch>
       </div>

@@ -71,6 +71,7 @@ form p {
 }
 
 .login-btn1 {
+  cursor: pointer;
   width: 90%;
   background: #fb641b;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);
@@ -81,4 +82,8 @@ form p {
   padding: 15px;
 
   margin-bottom: 60px;
+}
+
+#loginfail {
+  color: red;
 }

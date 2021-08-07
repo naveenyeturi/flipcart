@@ -4,7 +4,7 @@ import { BallRotate } from "react-pure-loaders";
 import { db } from "./firebase.js";
 import Product from "./Product";
 
-function Products() {
+function Products(props) {
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
 
@@ -15,9 +15,7 @@ function Products() {
       setLoading(true);
       const items = [];
       querySnapshot.forEach((doc) => {
-        // console.log(doc.id);
         const productData = doc.data();
-        productData.id = doc.id;
         items.push(productData);
       });
       setProducts(items);
@@ -29,7 +27,7 @@ function Products() {
     getProducts();
   }, []);
 
-  if (loading) {
+  if (loading || props.loading) {
     return (
       <div className="loading">
         <BallRotate color={"#123abc"} loading={true} size={"500"} />
@@ -39,8 +37,16 @@ function Products() {
 
   return (
     <div className="products">
-      {products.map((product) => {
-        return <Product key={product.id} />;
+      {products.map((product, i) => {
+        return (
+          <Product
+            key={product.pid}
+            product={product}
+            cart={props.cart}
+            setCart={props.setCart}
+            user={props.user}
+          />
+        );
       })}
     </div>
   );
