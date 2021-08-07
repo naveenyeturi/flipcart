@@ -37,14 +37,14 @@ function Header({ user, loading, cart }) {
     <>
       <div className="header">
         <div className="header__logo">
-          <a href="/">
+          <Link to="/">
             <img
               width="75"
               src="https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/flipkart-plus_8d85f4.png"
               alt="Flipkart"
               title="Flipkart"
             />
-          </a>
+          </Link>
           <a className="plus" href="#">
             ExplorePlus
             <img
@@ -107,10 +107,14 @@ function Header({ user, loading, cart }) {
             <Link to="/cart">
               <div className="item">
                 <div>
-                  {cart.length <= 0 ? (
-                    ""
+                  {user && !loading && cart ? (
+                    cart.length <= 0 ? (
+                      ""
+                    ) : (
+                      <p className="cartLength">{cart.length}</p>
+                    )
                   ) : (
-                    <p className="cartLength">{cart.length}</p>
+                    ""
                   )}
                   <ShoppingCartIcon />
                 </div>

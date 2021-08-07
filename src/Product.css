@@ -12,3 +12,7 @@
 .link {
   color: black;
 }
+
+button {
+  cursor: pointer;
+}

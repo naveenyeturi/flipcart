@@ -73,8 +73,10 @@ function App() {
           </Route> */}
 
           <Route path="/cart">
+            {!localStorage.getItem("email") ? <Redirect to="/signin" /> : ""}
+
             <Header user={user} loading={loading} cart={cart} />
-            <Cart cart={cart} />
+            {loading ? "" : <Cart cart={cart} />}
           </Route>
 
           <Route path="/">

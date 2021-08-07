@@ -1,0 +1,61 @@
+.cart {
+  background-color: #f0f0f0;
+  height: 100vh;
+  /* width: 100%; */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding: 50px;
+  padding-top: 20px;
+}
+
+.cart__right {
+  /* position: fixed;
+  left: 68%; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: white;
+  width: 25%;
+  height: 41%;
+
+  padding: 15px 20px 15px 20px;
+  border-radius: 2px;
+}
+
+.cart__right .heading {
+  opacity: 0.45;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.margin {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cart__right__item {
+  opacity: 0.8;
+  display: flex;
+  justify-content: space-between;
+}
+
+.total {
+  opacity: 0.9;
+  font-weight: 550;
+}
+
+.discount {
+  opacity: 0.8;
+  color: green;
+}
+
+.deliveryfee {
+  color: green;
+}
+
+.savings {
+  color: green;
+  font-weight: 450;
+}
