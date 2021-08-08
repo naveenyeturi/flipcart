@@ -15,9 +15,10 @@ function Product(props) {
       category: props.product.category,
       description: props.product.description,
       rating: props.product.rating,
+      quantity: 1,
       userEmail: props.user.email,
     });
-    props.setCart(props.product);
+    // props.setCart(props.product);
   };
 
   // console.log(props.user.email);

@@ -39,15 +39,13 @@ function Products(props) {
     <div className="products">
       {products.map((product, i) => {
         return (
-          <>
-            <Product
-              key={product.pid}
-              product={product}
-              cart={props.cart}
-              setCart={props.setCart}
-              user={props.user}
-            />
-          </>
+          <Product
+            key={product.pid}
+            product={product}
+            cart={props.cart}
+            setCart={props.setCart}
+            user={props.user}
+          />
         );
       })}
     </div>

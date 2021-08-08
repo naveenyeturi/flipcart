@@ -28,11 +28,12 @@ function App() {
       const cartItems = [];
       querySnapshot.forEach((doc) => {
         const productData = doc.data();
+        // console.log(doc.id);
         if (productData.userEmail === localStorage.getItem("email")) {
           cartItems.push(productData);
         }
       });
-      setCart(...cart, cartItems);
+      setCart(cartItems);
 
       setTimeout(() => {
         setLoading(false);
@@ -45,6 +46,7 @@ function App() {
     auth.onAuthStateChanged((authUser) => {
       setUser(authUser);
       // setLoading(false);
+      // console.log(authUser);
     });
 
     getCartProducts();
@@ -73,13 +75,18 @@ function App() {
           </Route> */}
 
           <Route path="/cart">
-            {!localStorage.getItem("email") ? <Redirect to="/signin" /> : ""}
-
+            {!localStorage.getItem("email") && !user ? (
+              <Redirect to="/signin" />
+            ) : (
+              ""
+            )}
             <Header user={user} loading={loading} cart={cart} />
-            {loading ? "" : <Cart cart={cart} />}
+            {loading ? "" : <Cart cart={cart} setCart={setCart} />}
           </Route>
 
           <Route path="/">
+            {/* {console.log("local= " + localStorage.getItem("email"))}
+            {console.log(user)} */}
             <Header user={user} loading={loading} cart={cart} />
             <Products
               cart={cart}

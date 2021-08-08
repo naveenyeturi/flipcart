@@ -20,6 +20,8 @@ function Signin({ setUser }) {
         if (user.email) {
           setUser(user);
           localStorage.setItem("email", email);
+          // console.log(localStorage.getItem("email"));
+
           history.push("/");
         }
         // ...

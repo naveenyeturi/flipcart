@@ -29,6 +29,7 @@ function Header({ user, loading, cart }) {
 
   const logout = () => {
     auth.signOut();
+    localStorage.clear("email");
     setNameHover(false);
     setMoreHover(false);
   };

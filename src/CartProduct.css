@@ -1,0 +1,99 @@
+.cartProductInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 40px;
+}
+
+.cartProductImage img {
+  height: 110px;
+}
+.cartProductDetails {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.cartProductDetails .seller {
+  margin: 15px 0px 15px 0px;
+  display: flex;
+  align-items: center;
+}
+.cartProductDetails .seller p {
+  opacity: 0.6;
+}
+
+.cartProductDetails .seller img {
+  height: 20px;
+  margin-left: 10px;
+}
+
+.cartProductDelivery {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 50px;
+  transform: translateY(-30px);
+}
+
+.free {
+  color: green;
+}
+
+.strikeLine {
+  margin-left: 5px;
+  text-decoration: line-through;
+}
+
+.cartProductDelivery .replace {
+  opacity: 0.8;
+  font-size: 70%;
+}
+
+.cartProductEdit {
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cartProductEdit .quantityEdit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+}
+
+.cartProductEdit .quantityEdit .decreaseQuantity {
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid gray;
+  border-radius: 50%;
+  width: 20px;
+  margin: 10px;
+}
+
+.cartProductEdit .quantityEdit .quantityValue {
+  width: 30px;
+  height: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.cartProductEdit .quantityEdit .increaseQuantity {
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid gray;
+  border-radius: 50%;
+  width: 20px;
+  margin: 10px;
+}
+
+.removeItem {
+  cursor: pointer;
+}
+
+.removeItem:hover {
+  color: rgb(12, 84, 112);
+}
