@@ -3,6 +3,7 @@ import "./Signup.css";
 import { Link } from "react-router-dom";
 
 import { auth } from "./firebase.js";
+import { TextField } from "@material-ui/core";
 
 function Signup() {
   const [name, setName] = useState("");
@@ -39,33 +40,30 @@ function Signup() {
       </div>
       <div className="signin__right">
         <form onSubmit={signup}>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            placeholder="Enter Name"
-            autoFocus
-            required
+          <TextField
+            id="standard-basic"
+            label="Enter Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type="text"
-            name="email"
-            id="email"
-            placeholder="Enter Email/Mobile number"
             required
+            style={{ width: 330, marginBottom: 35 }}
+          />
+          <TextField
+            id="standard-basic"
+            label="Enter Email/Mobile number"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Enter Password"
             required
+            style={{ width: 330, marginBottom: 35 }}
+          />
+          <TextField
+            id="standard-basic"
+            type="password"
+            label="Enter Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
+            style={{ width: 330, marginBottom: 35 }}
           />
           <p>
             By continuing, you agree to Flipkart's <a href="#">Terms of Use </a>

@@ -105,3 +105,20 @@
 .cart__left .cart__left__heading {
   margin-bottom: 20px;
 }
+
+.placeOrder .order-btn {
+  margin-top: 15px;
+  padding: 16px 30px;
+  min-width: 250px;
+  text-transform: uppercase;
+  border: 1px solid #fb641b;
+  border-radius: 2px;
+  font-size: 16px;
+  font-weight: 500;
+  position: relative;
+  background-color: #fb641b;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  float: right;
+}

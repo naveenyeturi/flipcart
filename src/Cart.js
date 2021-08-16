@@ -41,6 +41,10 @@ function Cart(props) {
             />
           );
         })}
+
+        <div className="placeOrder">
+          <button className="order-btn">PLACE ORDER</button>
+        </div>
       </div>
 
       <div className="cart__right">

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Signin.css";
 import { Link, useHistory } from "react-router-dom";
 import { auth } from "./firebase.js";
+import { TextField } from "@material-ui/core";
 
 function Signin({ setUser }) {
   const [email, setEmail] = useState("");
@@ -43,24 +44,22 @@ function Signin({ setUser }) {
       </div>
       <div className="signin__right">
         <form onSubmit={signin}>
-          <input
-            type="text"
-            name="email"
-            id="email"
-            placeholder="Enter Email/Mobile number"
-            autoFocus
-            required
+          <TextField
+            id="standard-basic"
+            label="Enter Email/Mobile number"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Enter Password"
             required
+            style={{ width: 330, marginBottom: 35 }}
+          />
+          <TextField
+            id="standard-basic"
+            label="Enter Password"
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
+            style={{ width: 330, marginBottom: 35 }}
           />
           <p>
             By continuing, you agree to Flipkart's <a href="#">Terms of Use </a>
