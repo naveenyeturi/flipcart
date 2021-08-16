@@ -45,6 +45,34 @@ function CartProduct(props) {
     });
   };
 
+  const decreaseQuantity = () => {
+    const cartRef = db.collection("cart");
+    cartRef.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // console.log(doc.data());
+        const productData = doc.data();
+        if (props.cartProduct.pid === doc.data().pid) {
+          const productQuantity = productData.quantity;
+          cartRef.doc(doc.id).update({ quantity: productQuantity - 1 });
+        }
+      });
+    });
+  };
+
+  const increaseQuantity = () => {
+    const cartRef = db.collection("cart");
+    cartRef.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // console.log(doc.data());
+        const productData = doc.data();
+        if (props.cartProduct.pid === doc.data().pid) {
+          const productQuantity = productData.quantity;
+          cartRef.doc(doc.id).update({ quantity: productQuantity + 1 });
+        }
+      });
+    });
+  };
+
   return (
     <div className="cartProduct">
       <div className="cartProductInfo">
@@ -73,7 +101,15 @@ function CartProduct(props) {
 
       <div className="cartProductEdit">
         <div className="quantityEdit">
-          <div className="decreaseQuantity">-</div>
+          <div>
+            <button
+              className="decreaseQuantity"
+              onClick={decreaseQuantity}
+              disabled={props.cartProduct.quantity <= 1 ? true : false}
+            >
+              -
+            </button>
+          </div>
           <div className="quantityValue">
             <input
               type="text"
@@ -84,7 +120,15 @@ function CartProduct(props) {
               onChange={handleQuantityValue}
             />
           </div>
-          <div className="increaseQuantity">+</div>
+          <div>
+            <button
+              className="increaseQuantity"
+              onClick={increaseQuantity}
+              disabled={props.cartProduct.quantity >= 25 ? true : false}
+            >
+              +
+            </button>
+          </div>
         </div>
         <div className="removeItem" onClick={removeCartItem}>
           <h4>REMOVE</h4>

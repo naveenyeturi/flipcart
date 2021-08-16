@@ -71,7 +71,10 @@
   border: 1px solid gray;
   border-radius: 50%;
   width: 20px;
+  height: 20px;
   margin: 10px;
+  text-align: center;
+  font-weight: bold;
 }
 
 .cartProductEdit .quantityEdit .quantityValue {
@@ -87,7 +90,10 @@
   border: 1px solid gray;
   border-radius: 50%;
   width: 20px;
+  height: 20px;
   margin: 10px;
+  text-align: center;
+  font-weight: bold;
 }
 
 .removeItem {

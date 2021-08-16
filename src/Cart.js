@@ -5,7 +5,7 @@ import CartProduct from "./CartProduct";
 
 function Cart(props) {
   var cartTotal = props.cart.reduce((total, cartItem) => {
-    return total + parseInt(cartItem.price);
+    return total + parseInt(cartItem.quantity) * parseInt(cartItem.price);
   }, 0);
   // console.log(cartTotal);
   // var cartTotal = 0;
