@@ -15,6 +15,7 @@ import { auth, db } from "./firebase.js";
 import { useEffect } from "react";
 import Products from "./Products";
 import Cart from "./Cart";
+import Admin from "./Admin";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -56,13 +57,17 @@ function App() {
     <Router>
       <div className="app">
         <Switch>
-          <Route path="/signin">
+          <Route path="/admin" exact>
+            <Admin />
+          </Route>
+
+          <Route path="/signin" exact>
             {user ? <Redirect to="/" /> : ""}
             <Header user={user} />
             <Signin setUser={setUser} />
           </Route>
 
-          <Route path="/signup">
+          <Route path="/signup" exact>
             {user ? <Redirect to="/" /> : ""}
             <Header user={user} />
             <Signup />
@@ -74,7 +79,7 @@ function App() {
             <Products />
           </Route> */}
 
-          <Route path="/cart">
+          <Route path="/cart" exact>
             {!localStorage.getItem("email") && !user ? (
               <Redirect to="/signin" />
             ) : (
@@ -84,9 +89,16 @@ function App() {
             {loading ? "" : <Cart cart={cart} setCart={setCart} />}
           </Route>
 
-          <Route path="/">
-            {/* {console.log("local= " + localStorage.getItem("email"))}
-            {console.log(user)} */}
+          <Route path="/" exact>
+            <Header user={user} loading={loading} cart={cart} />
+            <Products
+              cart={cart}
+              setCart={setCart}
+              loading={loading}
+              user={user}
+            />
+          </Route>
+          <Route path="/category/:categoryName" exact>
             <Header user={user} loading={loading} cart={cart} />
             <Products
               cart={cart}

@@ -1,0 +1,21 @@
+.categories {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 15px 10px 15px;
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.category:hover {
+  color: blue;
+}
+
+.category .categoryImage img {
+  width: 60px;
+}
