@@ -50,10 +50,11 @@ function Product(props) {
     <div className="product">
       <Link
         className="link"
-        to={{
-          pathname: `product/${props.product.title}`,
-          query: { id: props.product.id },
-        }}
+        to={"/product/" + props.product.pid}
+        // to={{
+        //   pathname: `product/${props.product.title}`,
+        //   query: { id: props.product.pid },
+        // }}
       >
         <div className="productItem">
           <div className="image">

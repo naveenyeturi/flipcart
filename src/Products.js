@@ -28,11 +28,32 @@ function Products(props) {
     });
   };
 
+  const searchProduct = () => {
+    let productsCopy = products;
+    // console.log(productsCopy);
+    productsCopy = productsCopy.filter((product) =>
+      product.title.toLowerCase().includes(props.search.toLowerCase())
+    );
+    // console.log(productsCopy);
+    setProducts(productsCopy);
+  };
+
+  useEffect(() => {
+    // console.log(props.search);
+    // console.log("search changed");
+    searchProduct();
+  }, [props.search]);
+
   useEffect(() => {
     if (params.categoryName !== undefined) {
       categoryProducts(params.categoryName);
-    } else {
+    } else if (props.search === "") {
       getProducts();
+    }
+    // props.setSearch("");
+    // console.log(" url params changed");
+    if (props.search !== "") {
+      searchProduct();
     }
   }, [params]);
 
@@ -73,9 +94,9 @@ function Products(props) {
     });
   }
 
-  useEffect(() => {
-    getProducts();
-  }, []);
+  // useEffect(() => {
+  //   getProducts();
+  // }, []);
 
   if (loading || props.loading) {
     return (

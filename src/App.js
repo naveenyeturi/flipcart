@@ -22,6 +22,10 @@ function App() {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  // const [products, setProducts] = useState([]);   implement like this
+
+  const [search, setSearch] = useState("");
+
   function getCartProducts() {
     setLoading(true);
     const cartRef = db.collection("cart");
@@ -63,21 +67,25 @@ function App() {
 
           <Route path="/signin" exact>
             {user ? <Redirect to="/" /> : ""}
-            <Header user={user} />
+            <Header user={user} search={search} setSearch={setSearch} />
             <Signin setUser={setUser} />
           </Route>
 
           <Route path="/signup" exact>
             {user ? <Redirect to="/" /> : ""}
-            <Header user={user} />
+            <Header user={user} search={search} setSearch={setSearch} />
             <Signup />
           </Route>
 
-          {/* <Route path="/product/:name">
-            <Header user={user} loading={loading} />
+          <Route path="/product/:pid">
+            <Header
+              user={user}
+              loading={loading}
+              search={search}
+              setSearch={setSearch}
+            />
             <h1>Inside Product</h1>
-            <Products />
-          </Route> */}
+          </Route>
 
           <Route path="/cart" exact>
             {!localStorage.getItem("email") && !user ? (
@@ -85,26 +93,48 @@ function App() {
             ) : (
               ""
             )}
-            <Header user={user} loading={loading} cart={cart} />
+            <Header
+              user={user}
+              loading={loading}
+              cart={cart}
+              search={search}
+              setSearch={setSearch}
+            />
             {loading ? "" : <Cart cart={cart} setCart={setCart} />}
           </Route>
 
           <Route path="/" exact>
-            <Header user={user} loading={loading} cart={cart} />
+            <Header
+              user={user}
+              loading={loading}
+              cart={cart}
+              search={search}
+              setSearch={setSearch}
+            />
             <Products
               cart={cart}
               setCart={setCart}
               loading={loading}
               user={user}
+              search={search}
+              setSearch={setSearch}
             />
           </Route>
           <Route path="/category/:categoryName" exact>
-            <Header user={user} loading={loading} cart={cart} />
+            <Header
+              user={user}
+              loading={loading}
+              cart={cart}
+              search={search}
+              setSearch={setSearch}
+            />
             <Products
               cart={cart}
               setCart={setCart}
               loading={loading}
               user={user}
+              search={search}
+              setSearch={setSearch}
             />
           </Route>
         </Switch>

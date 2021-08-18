@@ -21,9 +21,16 @@ import { Link, useRouteMatch } from "react-router-dom";
 
 import { auth } from "./firebase.js";
 
-function Header({ user, loading, cart }) {
+function Header({ user, loading, cart, search, setSearch }) {
   const [nameHover, setNameHover] = useState(false);
   const [moreHover, setMoreHover] = useState(false);
+
+  // const [search, setSearch] = useState("");
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    // console.log(e.target.value);
+  };
 
   const match = useRouteMatch("/cart");
 
@@ -37,7 +44,7 @@ function Header({ user, loading, cart }) {
   return (
     <>
       <div className="header">
-        <div className="header__logo">
+        <div className="header__logo" onClick={(e) => setSearch("")}>
           <Link to="/">
             <img
               width="75"
@@ -63,6 +70,8 @@ function Header({ user, loading, cart }) {
             id="search"
             title="Search for products, brands and more"
             placeholder="Search for products, brands and more"
+            value={search}
+            onChange={(e) => handleSearch(e)}
           />
           <SearchIcon className="searchicon" />
         </div>
