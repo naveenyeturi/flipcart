@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import Products from "./Products";
 import Cart from "./Cart";
 import Admin from "./Admin";
+import ViewProduct from "./ViewProduct";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -81,10 +82,11 @@ function App() {
             <Header
               user={user}
               loading={loading}
+              cart={cart}
               search={search}
               setSearch={setSearch}
             />
-            <h1>Inside Product</h1>
+            <ViewProduct />
           </Route>
 
           <Route path="/cart" exact>
