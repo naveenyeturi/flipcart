@@ -18,6 +18,13 @@ import Cart from "./Cart";
 import Admin from "./Admin";
 import ViewProduct from "./ViewProduct";
 import WishList from "./WishList";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import Payment from "./Payment";
+
+const promise = loadStripe(
+  "pk_test_51JQUNuSEgjCkRoiC2hrVueiiGD0MhHTLBCtQ1PE4u4aaKArirLYKM1oKWZlsfJOnZpWueSRz3frlzVC0IXEYpshS009uGVZGRU"
+);
 
 function App() {
   const [user, setUser] = useState(null);
@@ -103,7 +110,7 @@ function App() {
               search={search}
               setSearch={setSearch}
             />
-            <ViewProduct />
+            <ViewProduct user={user} cart={cart} />
           </Route>
 
           <Route path="/cart" exact>
@@ -122,7 +129,23 @@ function App() {
             {loading ? "" : <Cart cart={cart} setCart={setCart} />}
           </Route>
 
-          <Route path="/" exact>
+          <Route path="/payment" exact>
+            {!localStorage.getItem("email") && !user ? (
+              <Redirect to="/signin" />
+            ) : (
+              ""
+            )}
+            <Header
+              user={user}
+              loading={loading}
+              cart={cart}
+              search={search}
+              setSearch={setSearch}
+            />
+            <Payment cart={cart} setCart={setCart} />
+          </Route>
+
+          <Route path="/category/:categoryName" exact>
             <Header
               user={user}
               loading={loading}
@@ -139,7 +162,7 @@ function App() {
               setSearch={setSearch}
             />
           </Route>
-          <Route path="/category/:categoryName" exact>
+          <Route path="/" exact>
             <Header
               user={user}
               loading={loading}

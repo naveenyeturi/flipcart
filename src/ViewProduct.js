@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { BallRotate } from "react-pure-loaders";
 import { db } from "./firebase";
 import "./ViewProduct.css";
 import StarRateIcon from "@material-ui/icons/StarRate";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
-function ViewProduct() {
+function ViewProduct(props) {
   const params = useParams();
   //   console.log(params.pid);
   const [product, setProduct] = useState();
@@ -39,6 +40,20 @@ function ViewProduct() {
       });
     });
   };
+
+  var isInCart = false;
+  const checkInCart = () => {
+    const cart = props.cart;
+    for (let index = 0; index < cart.length; index++) {
+      if (product.pid === cart[index].pid) {
+        isInCart = true;
+      }
+    }
+  };
+
+  if (product) {
+    checkInCart();
+  }
 
   useEffect(() => {
     getProductDetails();
@@ -84,6 +99,28 @@ function ViewProduct() {
     });
   };
 
+  const history = useHistory();
+  const addtocart = () => {
+    if (!props.user) {
+      history.push("/signin");
+    }
+
+    if (props.user) {
+      const cartRef = db.collection("cart");
+      cartRef.add({
+        pid: product.pid,
+        title: product.title,
+        image: product.image,
+        price: product.price,
+        category: product.category,
+        description: product.description,
+        rating: product.rating,
+        quantity: 1,
+        userEmail: props.user.email,
+      });
+    }
+  };
+
   if (loading) {
     return (
       <div className="loading">
@@ -102,6 +139,21 @@ function ViewProduct() {
             style={{ fontSize: 15 }}
             onClick={WishList}
           />
+        </div>
+        <div className="buttons">
+          {isInCart ? (
+            <Link to="/cart">
+              <div className="tocartbtn">
+                <ShoppingCartIcon />
+                <button>GO TO CART</button>
+              </div>
+            </Link>
+          ) : (
+            <div className="tocartbtn" onClick={addtocart}>
+              <ShoppingCartIcon />
+              <button>ADD TO CART</button>
+            </div>
+          )}
         </div>
       </div>
       <div className="productRight">

@@ -1,9 +1,11 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 import "./Cart.css";
 import CartProduct from "./CartProduct";
 
 function Cart(props) {
+  const history = useHistory();
   var cartTotal = props.cart.reduce((total, cartItem) => {
     return total + parseInt(cartItem.quantity) * parseInt(cartItem.price);
   }, 0);
@@ -43,7 +45,12 @@ function Cart(props) {
         })}
 
         <div className="placeOrder">
-          <button className="order-btn">PLACE ORDER</button>
+          <button
+            className="order-btn"
+            onClick={(e) => history.push("/payment")}
+          >
+            PLACE ORDER
+          </button>
         </div>
       </div>
 
