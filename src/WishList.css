@@ -1,0 +1,15 @@
+.wishList {
+  background-color: #f0f0f0;
+  padding: 100px 200px;
+}
+
+.wishListContainer {
+  background-color: white;
+  padding: 20px;
+}
+
+.wishListHeading h1 {
+  padding: 20px 30px;
+  font-size: 17px;
+  font-weight: 500;
+}

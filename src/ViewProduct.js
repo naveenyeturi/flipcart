@@ -11,7 +11,7 @@ function ViewProduct() {
   //   console.log(params.pid);
   const [product, setProduct] = useState();
   const [loading, setLoading] = useState(true);
-  const [gray, setGray] = useState(true);
+  const [wish, setWish] = useState(false);
 
   const getProductDetails = () => {
     setLoading(true);
@@ -21,7 +21,6 @@ function ViewProduct() {
       querySnapshot.forEach((doc) => {
         const productData = doc.data();
         if (productData.pid === pid) {
-          //   console.log(productData);
           setProduct(productData);
           setLoading(false);
         }
@@ -29,13 +28,60 @@ function ViewProduct() {
     });
   };
 
+  const checkWishList = () => {
+    const wishRef = db.collection("wishlist");
+    wishRef.onSnapshot((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const productData = doc.data();
+        if (productData.pid === params.pid) {
+          setWish(true);
+        }
+      });
+    });
+  };
+
   useEffect(() => {
     getProductDetails();
+    checkWishList();
   }, []);
 
-  const addToFavourite = (e) => {
-    setGray(!gray);
-    // console.log("test");
+  const WishList = (e) => {
+    if (wish) {
+      setWish(false);
+      removeFromWishList();
+    } else {
+      setWish(true);
+      addToWishList();
+    }
+  };
+
+  const addToWishList = (e) => {
+    const wishRef = db.collection("wishlist");
+    wishRef.add({
+      pid: product.pid,
+      title: product.title,
+      image: product.image,
+      price: product.price,
+      category: product.category,
+      description: product.description,
+      rating: product.rating,
+      userEmail: localStorage.getItem("email"),
+    });
+  };
+
+  const removeFromWishList = (e) => {
+    const wishRef = db.collection("wishlist");
+    wishRef.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const productData = doc.data();
+        if (
+          productData.userEmail === localStorage.getItem("email") &&
+          productData.pid === params.pid
+        ) {
+          wishRef.doc(doc.id).delete();
+        }
+      });
+    });
   };
 
   if (loading) {
@@ -52,9 +98,9 @@ function ViewProduct() {
         <div className="productImage">
           <img src={product.image} alt={product.title} />
           <FavoriteIcon
-            className={gray ? "favouriteIcon gray" : "favouriteIcon red"}
+            className={!wish ? "favouriteIcon gray" : "favouriteIcon red"}
             style={{ fontSize: 15 }}
-            onClick={addToFavourite}
+            onClick={WishList}
           />
         </div>
       </div>

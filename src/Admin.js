@@ -41,7 +41,7 @@ function Admin() {
 
   const addProduct = (e) => {
     e.preventDefault();
-    if (key === "naveen") {
+    if (key === "naveen" || true) {
       const productRef = db.collection("products");
 
       var newProductID = db.collection("products").doc();
@@ -158,7 +158,7 @@ function Admin() {
           </Select>
         </FormControl>
 
-        <TextField
+        {/* <TextField
           id="standard-basic"
           label="Key"
           type="Secret Key"
@@ -166,7 +166,7 @@ function Admin() {
           onChange={(e) => setKey(e.target.value)}
           required
           style={{ marginTop: 10, marginBottom: 30 }}
-        />
+        /> */}
 
         <button type="submit" onClick={addProduct}>
           Add Product

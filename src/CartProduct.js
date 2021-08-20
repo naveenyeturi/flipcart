@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./CartProduct.css";
 
 import { db } from "./firebase.js";
@@ -17,32 +18,22 @@ function CartProduct(props) {
   };
 
   const removeCartItem = () => {
-    const cartRef = db.collection("cart");
-
-    //don't use snapshot here because it will delete as soon as u add it(it updates when firebase is changed and this code will run)
-    // cartRef.onSnapshot((querySnapshot) => {
-    //   querySnapshot.forEach((doc) => {
-    //     const productData = doc.data();
-    //     if (
-    //       productData.userEmail === localStorage.getItem("email") &&
-    //       props.cartProduct.pid === doc.data().pid
-    //     ) {
-    //       cartRef.doc(doc.id).delete();
-    //     }
-    //   });
-    // });
-    cartRef.get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        // console.log(doc.data());
-        const productData = doc.data();
-        if (
-          productData.userEmail === localStorage.getItem("email") &&
-          props.cartProduct.pid === doc.data().pid
-        ) {
-          cartRef.doc(doc.id).delete();
-        }
+    if (window.confirm("Remove this item?")) {
+      const cartRef = db.collection("cart");
+      //don't use snapshot here because it will delete as soon as u add it(it updates when firebase is changed and this code will run)
+      cartRef.get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          // console.log(doc.data());
+          const productData = doc.data();
+          if (
+            productData.userEmail === localStorage.getItem("email") &&
+            props.cartProduct.pid === doc.data().pid
+          ) {
+            cartRef.doc(doc.id).delete();
+          }
+        });
       });
-    });
+    }
   };
 
   const decreaseQuantity = () => {
@@ -76,11 +67,18 @@ function CartProduct(props) {
   return (
     <div className="cartProduct">
       <div className="cartProductInfo">
-        <div className="cartProductImage">
-          <img src={props.cartProduct.image} alt={props.cartProduct.title} />
-        </div>
+        <Link to={"/product/" + props.cartProduct.pid}>
+          <div className="cartProductImage">
+            <img src={props.cartProduct.image} alt={props.cartProduct.title} />
+          </div>
+        </Link>
         <div className="cartProductDetails">
-          <p>{props.cartProduct.title}</p>
+          <Link
+            style={{ color: "black" }}
+            to={"/product/" + props.cartProduct.pid}
+          >
+            <p>{props.cartProduct.title}</p>
+          </Link>
           <div className="seller">
             <p>Seller: {sellerName[Math.floor(Math.random() * 5)]} Online</p>
             <img

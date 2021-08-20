@@ -13,6 +13,7 @@ import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import ContactSupportIcon from "@material-ui/icons/ContactSupport";
+import AddBoxIcon from "@material-ui/icons/AddBox";
 import { useState } from "react";
 
 import { BallClipRotate } from "react-pure-loaders";
@@ -144,10 +145,12 @@ function Header({ user, loading, cart, search, setSearch }) {
           <ViewModuleIcon />
           <p>Orders</p>
         </div>
-        <div className="dropitem">
-          <FavoriteIcon />
-          <p>Wishlist</p>
-        </div>
+        <Link to="/wishlist">
+          <div className="dropitem">
+            <FavoriteIcon />
+            <p>Wishlist</p>
+          </div>
+        </Link>
         <div className="dropitem" onClick={logout}>
           <PowerSettingsNewIcon />
           <p>Logout</p>
@@ -155,6 +158,12 @@ function Header({ user, loading, cart, search, setSearch }) {
       </div>
 
       <div className={moreHover ? "moredrop" : "hidemoredrop"}>
+        <Link to="/admin">
+          <div className="dropitem">
+            <AddBoxIcon />
+            <p>Add Products</p>
+          </div>
+        </Link>
         <div className="dropitem">
           <NotificationsIcon />
           <p>Notification Preferences</p>

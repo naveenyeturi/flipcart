@@ -17,6 +17,7 @@ import Products from "./Products";
 import Cart from "./Cart";
 import Admin from "./Admin";
 import ViewProduct from "./ViewProduct";
+import WishList from "./WishList";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -76,6 +77,22 @@ function App() {
             {user ? <Redirect to="/" /> : ""}
             <Header user={user} search={search} setSearch={setSearch} />
             <Signup />
+          </Route>
+
+          <Route path="/wishlist" exact>
+            {!localStorage.getItem("email") && !user ? (
+              <Redirect to="/signin" />
+            ) : (
+              ""
+            )}
+            <Header
+              user={user}
+              loading={loading}
+              cart={cart}
+              search={search}
+              setSearch={setSearch}
+            />
+            <WishList />
           </Route>
 
           <Route path="/product/:pid">
