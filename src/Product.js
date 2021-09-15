@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { db } from "./firebase.js";
 
@@ -6,12 +7,14 @@ import "./Product.css";
 
 function Product(props) {
   const history = useHistory();
+  const storeValues = useSelector((state) => state);
+
   const addtocart = () => {
-    if (!props.user) {
+    if (!storeValues.user) {
       history.push("/signin");
     }
 
-    if (props.user) {
+    if (storeValues.user) {
       const cartRef = db.collection("cart");
       cartRef.add({
         pid: props.product.pid,
@@ -22,22 +25,15 @@ function Product(props) {
         description: props.product.description,
         rating: props.product.rating,
         quantity: 1,
-        userEmail: props.user.email,
+        userEmail: storeValues.user.email,
       });
-      // props.setCart(props.product);
     }
   };
 
-  // console.log(props.user.email);
-
   var isInCart = false;
   const checkInCart = () => {
-    const cart = props.cart;
-    // var isInCart = false;
-
+    const cart = storeValues.cart;
     for (let index = 0; index < cart.length; index++) {
-      // console.log(props.product.id + " " + cart[index].id);
-      // console.log(cart[index]);
       if (props.product.pid === cart[index].pid) {
         isInCart = true;
       }
@@ -48,14 +44,7 @@ function Product(props) {
 
   return (
     <div className="product">
-      <Link
-        className="link"
-        to={"/product/" + props.product.pid}
-        // to={{
-        //   pathname: `product/${props.product.title}`,
-        //   query: { id: props.product.pid },
-        // }}
-      >
+      <Link className="link" to={"/product/" + props.product.pid}>
         <div className="productItem">
           <div className="image">
             <img
@@ -73,7 +62,7 @@ function Product(props) {
         </div>
       </Link>
 
-      {isInCart && props.user ? (
+      {isInCart && storeValues.user ? (
         <Link to="/cart">
           <div className="incart">
             <button>Go to cart</button>

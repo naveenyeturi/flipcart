@@ -3,10 +3,14 @@ import "./Signin.css";
 import { Link, useHistory } from "react-router-dom";
 import { auth } from "./firebase.js";
 import { TextField } from "@material-ui/core";
+import { loggedIn } from "./redux/actions";
+import { useDispatch } from "react-redux";
 
 function Signin({ setUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
 
   const history = useHistory();
 
@@ -19,10 +23,10 @@ function Signin({ setUser }) {
         // Signed in
         var user = userCredential.user;
         if (user.email) {
-          setUser(user);
+          // setUser(user);
           localStorage.setItem("email", email);
           // console.log(localStorage.getItem("email"));
-
+          dispatch(loggedIn(user));
           history.push("/");
         }
         // ...
@@ -45,7 +49,7 @@ function Signin({ setUser }) {
       <div className="signin__right">
         <form onSubmit={signin}>
           <TextField
-            id="standard-basic"
+            id="standard-basic1"
             label="Enter Email/Mobile number"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -53,7 +57,7 @@ function Signin({ setUser }) {
             style={{ width: 330, marginBottom: 35 }}
           />
           <TextField
-            id="standard-basic"
+            id="standard-basic2"
             label="Enter Password"
             type="password"
             value={password}
@@ -62,8 +66,8 @@ function Signin({ setUser }) {
             style={{ width: 330, marginBottom: 35 }}
           />
           <p>
-            By continuing, you agree to Flipkart's <a href="#">Terms of Use </a>
-            and <a href="#">Privacy Policy</a>.
+            By continuing, you agree to Flipkart's <a href="/">Terms of Use </a>
+            and <a href="/">Privacy Policy</a>.
           </p>
           <p id="loginfail"></p>
           <button className="login-btn1" type="submit">

@@ -2,9 +2,7 @@ import React from "react";
 import "./Header.css";
 import SearchIcon from "@material-ui/icons/Search";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-// import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-// import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
@@ -15,23 +13,16 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import { useState } from "react";
-
 import { BallClipRotate } from "react-pure-loaders";
-
 import { Link, useRouteMatch } from "react-router-dom";
-
 import { auth } from "./firebase.js";
+import { useDispatch, useSelector } from "react-redux";
 
-function Header({ user, loading, cart, search, setSearch }) {
+function Header({ search, setSearch }) {
   const [nameHover, setNameHover] = useState(false);
   const [moreHover, setMoreHover] = useState(false);
-
-  // const [search, setSearch] = useState("");
-
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
-    // console.log(e.target.value);
-  };
+  const dispatch = useDispatch();
+  const storeValues = useSelector((state) => state);
 
   const match = useRouteMatch("/cart");
 
@@ -40,21 +31,26 @@ function Header({ user, loading, cart, search, setSearch }) {
     localStorage.clear("email");
     setNameHover(false);
     setMoreHover(false);
+    dispatch({
+      type: "SET_CART",
+      payload: [],
+    });
   };
 
   return (
     <>
       <div className="header">
-        <div className="header__logo" onClick={(e) => setSearch("")}>
+        <div className="header__logo">
           <Link to="/">
             <img
               width="75"
               src="https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/flipkart-plus_8d85f4.png"
               alt="Flipkart"
               title="Flipkart"
+              onClick={() => setSearch("")}
             />
           </Link>
-          <a className="plus" href="#">
+          <a className="plus" href="/">
             ExplorePlus
             <img
               width="10"
@@ -72,17 +68,17 @@ function Header({ user, loading, cart, search, setSearch }) {
             title="Search for products, brands and more"
             placeholder="Search for products, brands and more"
             value={search}
-            onChange={(e) => handleSearch(e)}
+            onChange={(e) => setSearch(e.target.value)}
           />
           <SearchIcon className="searchicon" />
         </div>
 
         <div className="header__menuitems">
-          {loading ? (
+          {storeValues.loading ? (
             <div className="item">
               <BallClipRotate color={"#ffffff"} loading={true} />
             </div>
-          ) : user ? (
+          ) : storeValues.user ? (
             <div
               className="item"
               onClick={() => {
@@ -90,7 +86,7 @@ function Header({ user, loading, cart, search, setSearch }) {
                 setMoreHover(false);
               }}
             >
-              {user.displayName}
+              {storeValues.user.displayName}
               {nameHover ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             </div>
           ) : (
@@ -118,11 +114,13 @@ function Header({ user, loading, cart, search, setSearch }) {
             <Link to="/cart">
               <div className="item">
                 <div>
-                  {user && !loading && cart ? (
-                    cart.length <= 0 ? (
+                  {storeValues.user &&
+                  !storeValues.loading &&
+                  storeValues.cart ? (
+                    storeValues.cart.length <= 0 ? (
                       ""
                     ) : (
-                      <p className="cartLength">{cart.length}</p>
+                      <p className="cartLength">{storeValues.cart.length}</p>
                     )
                   ) : (
                     ""

@@ -59,7 +59,10 @@ function WishList() {
           <h1>My Wishlist ({wishListProducts.length})</h1>
         </div>
         {wishListProducts.map((wishListProduct) => (
-          <Link to={"/product/" + wishListProduct.pid}>
+          <Link
+            to={"/product/" + wishListProduct.pid}
+            key={wishListProduct.pid}
+          >
             <WishListProduct wishListProduct={wishListProduct} />
           </Link>
         ))}

@@ -8,10 +8,7 @@ function Categories({ categoryProducts, categories }) {
       {categories.map((category, index) => {
         return (
           <Link key={index} to={"/category/" + category.categoryName}>
-            <div
-              className="category"
-              // onClick={() => categoryProducts(category.categoryName)}
-            >
+            <div className="category">
               <div className="categoryImage">
                 <img src={category.categoryImage} alt={category.categoryName} />
               </div>

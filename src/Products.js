@@ -1,68 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./Products.css";
 import { BallRotate } from "react-pure-loaders";
-import { db } from "./firebase.js";
 import Product from "./Product";
 import Categories from "./Categories";
-import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router";
 
-function Products(props) {
-  const [loading, setLoading] = useState(true);
-  const [products, setProducts] = useState([]);
+function Products({ search, setSearch }) {
+  const storeValues = useSelector((state) => state);
 
   const params = useParams();
-  // console.log(params);
 
-  const categoryProducts = (category) => {
-    const productsRef = db.collection("products");
-    productsRef.onSnapshot((querySnapshot) => {
-      setLoading(true);
-      const items = [];
-      querySnapshot.forEach((doc) => {
-        const productData = doc.data();
-        if (productData.category === category || category === "All")
-          items.push(productData);
-      });
-      setProducts(items);
-      setLoading(false);
-    });
-  };
+  let products = storeValues.products;
 
-  const searchProduct = () => {
-    let productsCopy = products;
-    // console.log(productsCopy);
-    productsCopy = productsCopy.filter((product) =>
-      product.title.toLowerCase().includes(props.search.toLowerCase())
+  if (params.categoryName) {
+    products = products.filter(
+      (product) => product.category === params.categoryName
     );
-    // console.log(productsCopy);
-    setProducts(productsCopy);
-  };
+  }
+  if (search !== "") {
+    products = products.filter(
+      (product) =>
+        product.title.toLowerCase().indexOf(search.toLowerCase()) !== -1
+    );
+  }
 
-  useEffect(() => {
-    // console.log(props.search);
-    // console.log("search changed");
-    searchProduct();
-  }, [props.search]);
-
-  useEffect(() => {
-    if (params.categoryName !== undefined) {
-      categoryProducts(params.categoryName);
-    } else if (props.search === "") {
-      getProducts();
-    }
-    // props.setSearch("");
-    // console.log(" url params changed");
-    if (props.search !== "") {
-      searchProduct();
-    }
-  }, [params]);
-
-  // if (params.categoryName) {
-  //   console.log(params.categoryName);
-  //   categoryProducts(params.categoryName);
-  // }
-
-  const [categories, setCategories] = useState([
+  const categories = [
     {
       categoryName: "Mobiles",
       categoryImage:
@@ -78,27 +41,9 @@ function Products(props) {
       categoryImage:
         "https://rukminim1.flixcart.com/flap/128/128/image/69c6589653afdb9a.png?q=100",
     },
-  ]);
+  ];
 
-  function getProducts() {
-    const productsRef = db.collection("products");
-    productsRef.onSnapshot((querySnapshot) => {
-      setLoading(true);
-      const items = [];
-      querySnapshot.forEach((doc) => {
-        const productData = doc.data();
-        items.push(productData);
-      });
-      setProducts(items);
-      setLoading(false);
-    });
-  }
-
-  // useEffect(() => {
-  //   getProducts();
-  // }, []);
-
-  if (loading || props.loading) {
+  if (storeValues.loading) {
     return (
       <div className="loading">
         <BallRotate color={"#123abc"} loading={true} size={"500"} />
@@ -108,18 +53,18 @@ function Products(props) {
 
   return (
     <>
-      <Categories categoryProducts={categoryProducts} categories={categories} />
+      <Categories categories={categories} />
+
+      {products.length === 0 ? (
+        <center>
+          <h1>No Products</h1>
+        </center>
+      ) : (
+        ""
+      )}
       <div className="products">
         {products.map((product, i) => {
-          return (
-            <Product
-              key={product.pid}
-              product={product}
-              cart={props.cart}
-              setCart={props.setCart}
-              user={props.user}
-            />
-          );
+          return <Product key={product.pid} product={product} />;
         })}
       </div>
     </>

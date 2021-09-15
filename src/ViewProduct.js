@@ -6,44 +6,18 @@ import "./ViewProduct.css";
 import StarRateIcon from "@material-ui/icons/StarRate";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import { useSelector } from "react-redux";
 
 function ViewProduct(props) {
   const params = useParams();
-  //   console.log(params.pid);
-  const [product, setProduct] = useState();
-  const [loading, setLoading] = useState(true);
   const [wish, setWish] = useState(false);
-
-  const getProductDetails = () => {
-    setLoading(true);
-    const pid = params.pid;
-    const productsRef = db.collection("products");
-    productsRef.onSnapshot((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const productData = doc.data();
-        if (productData.pid === pid) {
-          setProduct(productData);
-          setLoading(false);
-        }
-      });
-    });
-  };
-
-  const checkWishList = () => {
-    const wishRef = db.collection("wishlist");
-    wishRef.onSnapshot((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const productData = doc.data();
-        if (productData.pid === params.pid) {
-          setWish(true);
-        }
-      });
-    });
-  };
-
+  const storeValues = useSelector((state) => state);
+  const product = storeValues.products.filter(
+    (product) => product.pid === params.pid
+  )[0];
   var isInCart = false;
   const checkInCart = () => {
-    const cart = props.cart;
+    const cart = storeValues.cart;
     for (let index = 0; index < cart.length; index++) {
       if (product.pid === cart[index].pid) {
         isInCart = true;
@@ -56,7 +30,17 @@ function ViewProduct(props) {
   }
 
   useEffect(() => {
-    getProductDetails();
+    const checkWishList = () => {
+      const wishRef = db.collection("wishlist");
+      wishRef.onSnapshot((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const productData = doc.data();
+          if (productData.pid === params.pid) {
+            setWish(true);
+          }
+        });
+      });
+    };
     checkWishList();
   }, []);
 
@@ -101,11 +85,11 @@ function ViewProduct(props) {
 
   const history = useHistory();
   const addtocart = () => {
-    if (!props.user) {
+    if (!storeValues.user) {
       history.push("/signin");
     }
 
-    if (props.user) {
+    if (storeValues.user) {
       const cartRef = db.collection("cart");
       cartRef.add({
         pid: product.pid,
@@ -116,12 +100,12 @@ function ViewProduct(props) {
         description: product.description,
         rating: product.rating,
         quantity: 1,
-        userEmail: props.user.email,
+        userEmail: storeValues.user.email,
       });
     }
   };
 
-  if (loading) {
+  if (storeValues.loading) {
     return (
       <div className="loading">
         <BallRotate color={"#123abc"} loading={true} size={"500"} />

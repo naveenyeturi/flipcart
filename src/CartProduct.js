@@ -23,7 +23,6 @@ function CartProduct(props) {
       //don't use snapshot here because it will delete as soon as u add it(it updates when firebase is changed and this code will run)
       cartRef.get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          // console.log(doc.data());
           const productData = doc.data();
           if (
             productData.userEmail === localStorage.getItem("email") &&
@@ -40,7 +39,6 @@ function CartProduct(props) {
     const cartRef = db.collection("cart");
     cartRef.get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        // console.log(doc.data());
         const productData = doc.data();
         if (props.cartProduct.pid === doc.data().pid) {
           const productQuantity = productData.quantity;
@@ -54,7 +52,6 @@ function CartProduct(props) {
     const cartRef = db.collection("cart");
     cartRef.get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        // console.log(doc.data());
         const productData = doc.data();
         if (props.cartProduct.pid === doc.data().pid) {
           const productQuantity = productData.quantity;

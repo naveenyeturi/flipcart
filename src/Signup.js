@@ -41,7 +41,7 @@ function Signup() {
       <div className="signin__right">
         <form onSubmit={signup}>
           <TextField
-            id="standard-basic"
+            id="standard-basic1"
             label="Enter Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -49,7 +49,7 @@ function Signup() {
             style={{ width: 330, marginBottom: 35 }}
           />
           <TextField
-            id="standard-basic"
+            id="standard-basic2"
             label="Enter Email/Mobile number"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -57,7 +57,7 @@ function Signup() {
             style={{ width: 330, marginBottom: 35 }}
           />
           <TextField
-            id="standard-basic"
+            id="standard-basic3"
             type="password"
             label="Enter Password"
             value={password}
@@ -66,8 +66,8 @@ function Signup() {
             style={{ width: 330, marginBottom: 35 }}
           />
           <p>
-            By continuing, you agree to Flipkart's <a href="#">Terms of Use </a>
-            and <a href="#">Privacy Policy</a>.
+            By continuing, you agree to Flipkart's <a href="/">Terms of Use </a>
+            and <a href="/">Privacy Policy</a>.
           </p>
           <p id="registrationfail"></p>
           <button className="login-btn1" type="submit">

@@ -1,11 +1,7 @@
 import {
   FormControl,
-  FormControlLabel,
-  FormLabel,
   InputLabel,
   MenuItem,
-  Radio,
-  RadioGroup,
   Select,
   TextField,
 } from "@material-ui/core";
@@ -79,8 +75,6 @@ function Admin() {
     const productRef = db.collection("products");
     productRef.get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        // console.log(doc.data());
-        const productData = doc.data();
         if (pid === doc.data().pid) {
           productRef.doc(doc.id).delete();
           console.log("Product Deleted Successfully");

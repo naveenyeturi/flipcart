@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import "./Cart.css";
@@ -6,13 +7,12 @@ import CartProduct from "./CartProduct";
 
 function Cart(props) {
   const history = useHistory();
-  var cartTotal = props.cart.reduce((total, cartItem) => {
+  const storeValues = useSelector((state) => state);
+  const cart = storeValues.cart;
+  var cartTotal = cart.reduce((total, cartItem) => {
     return total + parseInt(cartItem.quantity) * parseInt(cartItem.price);
   }, 0);
-  // console.log(cartTotal);
-  // var cartTotal = 0;
-
-  if (props.cart.length === 0) {
+  if (cart.length === 0) {
     return (
       <div className="center">
         <img
@@ -29,12 +29,12 @@ function Cart(props) {
     <div className="cart">
       <div className="cart__left">
         <div className="cart__left__heading">
-          <h3>My Cart ({props.cart.length})</h3>
+          <h3>My Cart ({cart.length})</h3>
         </div>
 
         <div className="margin"></div>
 
-        {props.cart.map((cartProduct) => {
+        {cart.map((cartProduct) => {
           return (
             <CartProduct
               key={cartProduct.pid}
@@ -61,7 +61,7 @@ function Cart(props) {
 
         <div className="cart__right__item">
           <div>
-            Price ({props.cart.length} item{props.cart.length > 1 ? "s" : ""})
+            Price ({cart.length} item{cart.length > 1 ? "s" : ""})
           </div>
           <div>₹{cartTotal}</div>
         </div>
