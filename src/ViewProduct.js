@@ -15,6 +15,7 @@ function ViewProduct(props) {
   const product = storeValues.products.filter(
     (product) => product.pid === params.pid
   )[0];
+
   var isInCart = false;
   const checkInCart = () => {
     const cart = storeValues.cart;
@@ -42,7 +43,7 @@ function ViewProduct(props) {
       });
     };
     checkWishList();
-  }, []);
+  }, [params.pid]);
 
   const WishList = (e) => {
     if (wish) {
@@ -109,6 +110,14 @@ function ViewProduct(props) {
     return (
       <div className="loading">
         <BallRotate color={"#123abc"} loading={true} size={"500"} />
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="loading">
+        <h1>Product Not Found</h1>
       </div>
     );
   }

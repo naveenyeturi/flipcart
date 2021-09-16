@@ -43,35 +43,29 @@ function App() {
   return (
     <Router>
       <div className="app">
+        <Header search={search} setSearch={setSearch} />
         <Switch>
           <Route path="/admin" exact>
             <Admin />
           </Route>
 
           <Route path="/signin" exact>
-            {storeValues.user ? <Redirect to="/" /> : ""}
-            <Header />
-            <Signin /*setUser={setUser}*/ />
+            {storeValues.user ? <Redirect to="/" /> : <Signin />}
           </Route>
 
           <Route path="/signup" exact>
-            {storeValues.user ? <Redirect to="/" /> : ""}
-            <Header />
-            <Signup />
+            {storeValues.user ? <Redirect to="/" /> : <Signup />}
           </Route>
 
           <Route path="/wishlist" exact>
             {!localStorage.getItem("email") && !storeValues.user ? (
               <Redirect to="/signin" />
             ) : (
-              ""
+              <WishList />
             )}
-            <Header search={search} setSearch={setSearch} />
-            <WishList />
           </Route>
 
           <Route path="/product/:pid">
-            <Header search={search} setSearch={setSearch} />
             <ViewProduct />
           </Route>
 
@@ -79,20 +73,19 @@ function App() {
             {!localStorage.getItem("email") && !storeValues.user ? (
               <Redirect to="/signin" />
             ) : (
-              ""
+              <Cart />
             )}
-            <Header search={search} setSearch={setSearch} />
-            {storeValues.loading ? "" : <Cart />}
           </Route>
 
           <Route path="/category/:categoryName" exact>
-            <Header search={search} setSearch={setSearch} />
             <Products search={search} setSearch={setSearch} />
           </Route>
 
           <Route path="/" exact>
-            <Header search={search} setSearch={setSearch} />
             <Products search={search} setSearch={setSearch} />
+          </Route>
+          <Route path="/">
+            <h1>404 Page Not Found...</h1>
           </Route>
         </Switch>
       </div>

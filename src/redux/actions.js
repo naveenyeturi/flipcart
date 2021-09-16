@@ -21,7 +21,6 @@ export const setCart = () => {
       const cartItems = [];
       querySnapshot.forEach((doc) => {
         const productData = doc.data();
-        // console.log(doc.id);
         if (productData.userEmail === localStorage.getItem("email")) {
           cartItems.push(productData);
         }
@@ -49,9 +48,9 @@ export const setProducts = () => {
         type: "SET_PRODUCTS",
         payload: productItems,
       });
-      setTimeout(() => {
-        dispatch(setLoading(false));
-      }, 1);
+      // setTimeout(() => {
+      dispatch(setLoading(false));
+      // }, 1);
     });
   };
 };

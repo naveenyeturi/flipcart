@@ -1,4 +1,5 @@
 import React from "react";
+import { BallRotate } from "react-pure-loaders";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -9,9 +10,15 @@ function Cart(props) {
   const history = useHistory();
   const storeValues = useSelector((state) => state);
   const cart = storeValues.cart;
-  var cartTotal = cart.reduce((total, cartItem) => {
-    return total + parseInt(cartItem.quantity) * parseInt(cartItem.price);
-  }, 0);
+
+  if (storeValues.loading) {
+    return (
+      <div className="loading">
+        <BallRotate color={"#123abc"} loading={true} size={"500"} />
+      </div>
+    );
+  }
+
   if (cart.length === 0) {
     return (
       <div className="center">
@@ -24,6 +31,10 @@ function Cart(props) {
       </div>
     );
   }
+
+  var cartTotal = cart.reduce((total, cartItem) => {
+    return total + parseInt(cartItem.quantity) * parseInt(cartItem.price);
+  }, 0);
 
   return (
     <div className="cart">
