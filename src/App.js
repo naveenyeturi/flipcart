@@ -38,7 +38,7 @@ function App() {
       dispatch(setCart());
     });
     dispatch(setProducts());
-  }, []);
+  }, [dispatch]); //just added to remove warning
 
   return (
     <Router>

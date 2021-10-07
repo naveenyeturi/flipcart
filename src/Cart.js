@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BallRotate } from "react-pure-loaders";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -10,6 +10,10 @@ function Cart(props) {
   const history = useHistory();
   const storeValues = useSelector((state) => state);
   const cart = storeValues.cart;
+
+  useEffect(() => {
+    document.title = "Shopping Cart";
+  }, []);
 
   if (storeValues.loading) {
     return (

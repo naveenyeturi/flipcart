@@ -36,7 +36,10 @@ function ViewProduct(props) {
       wishRef.onSnapshot((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           const productData = doc.data();
-          if (productData.pid === params.pid) {
+          if (
+            productData.pid === params.pid &&
+            productData.userEmail === localStorage.getItem("email")
+          ) {
             setWish(true);
           }
         });
@@ -46,6 +49,10 @@ function ViewProduct(props) {
   }, [params.pid]);
 
   const WishList = (e) => {
+    if (!localStorage.getItem("email")) {
+      history.push("/signin");
+      return;
+    }
     if (wish) {
       setWish(false);
       removeFromWishList();

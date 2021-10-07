@@ -26,9 +26,15 @@ function Header({ search, setSearch }) {
 
   const match = useRouteMatch("/cart");
 
+  const userName =
+    JSON.parse(localStorage.getItem("user")) &&
+    JSON.parse(localStorage.getItem("user")).displayName;
+
   const logout = () => {
     auth.signOut();
     localStorage.clear("email");
+    localStorage.clear("user");
+    localStorage.clear();
     setNameHover(false);
     setMoreHover(false);
     dispatch({
@@ -74,7 +80,18 @@ function Header({ search, setSearch }) {
         </div>
 
         <div className="header__menuitems">
-          {storeValues.loading ? (
+        {userName ? (
+            <div
+              className="item"
+              onClick={() => {
+                setNameHover(!nameHover);
+                setMoreHover(false);
+              }}
+            >
+              {userName}
+              {nameHover ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            </div>
+          ) : storeValues.loading ? (
             <div className="item">
               <BallClipRotate color={"#ffffff"} loading={true} />
             </div>

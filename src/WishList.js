@@ -29,6 +29,7 @@ function WishList() {
 
   useEffect(() => {
     getWishListProducts();
+    document.title = "My Wishlist";
   }, []);
 
   if (loading) {

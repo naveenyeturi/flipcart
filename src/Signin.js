@@ -25,6 +25,9 @@ function Signin({ setUser }) {
         if (user.email) {
           // setUser(user);
           localStorage.setItem("email", email);
+          localStorage.setItem("user", JSON.stringify(user));
+          // console.log(user);
+          // console.log(localStorage.getItem("user"));
           // console.log(localStorage.getItem("email"));
           dispatch(loggedIn(user));
           history.push("/");
