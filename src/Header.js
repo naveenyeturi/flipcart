@@ -71,8 +71,8 @@ function Header({ search, setSearch }) {
             type="search"
             name="search"
             id="search"
-            title="Search for products, brands and more"
-            placeholder="Search for products, brands and more"
+            title="Search for products, brands and more..."
+            placeholder="Search for products, brands and more..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
